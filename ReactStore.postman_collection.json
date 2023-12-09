@@ -1,0 +1,53 @@
+{
+	"info": {
+		"_postman_id": "83205411-ae24-494f-89ac-d9291ce263f0",
+		"name": "ReactStore",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25165046",
+		"_collection_link": "https://bold-capsule-434266.postman.co/workspace/ReactStore~edf08d2f-a651-4e37-99b5-5e4c9a97a70f/collection/25165046-83205411-ae24-494f-89ac-d9291ce263f0?action=share&source=collection_link&creator=25165046"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Get Product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/products/4",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/products",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
