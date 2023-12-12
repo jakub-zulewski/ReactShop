@@ -1,4 +1,5 @@
 using API.Data;
+using API.Middleware;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,8 @@ builder.Services.AddDbContext<StoreContext>(options
 builder.Services.AddCors();
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseCors(options
     => options.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000"));
