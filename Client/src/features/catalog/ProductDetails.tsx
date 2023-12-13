@@ -12,6 +12,9 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Product } from "../../app/models/product";
 import agent from "../../app/api/agent";
+import NotFound from "../errors/NotFound";
+import { router } from "../../app/router/Routes";
+import { toast } from "react-toastify";
 
 export default function ProductDetails() {
   const { id } = useParams<{ id: string }>();
@@ -22,13 +25,16 @@ export default function ProductDetails() {
     id &&
       agent.Catalog.details(parseInt(id))
         .then((response) => setProduct(response))
-        .catch((error) => console.log(error))
+        .catch(() => {
+          toast.error("Something went wrong.");
+          router.navigate("/");
+        })
         .finally(() => setLoading(false));
   }, [id]);
 
   if (loading) return <h3>Loading...</h3>;
 
-  if (!product) return <h3>Product not found.</h3>;
+  if (!product) return <NotFound />;
 
   return (
     <Grid container spacing={6}>

@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Product } from "../../app/models/product";
 import ProductList from "./ProductList";
 import agent from "../../app/api/agent";
+import { router } from "../../app/router/Routes";
+import { toast } from "react-toastify";
 
 export default function Catalog() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -10,7 +12,10 @@ export default function Catalog() {
   useEffect(() => {
     agent.Catalog.list()
       .then((products) => setProducts(products))
-      .catch((error) => console.log(error))
+      .catch(() => {
+        toast.error("Something went wrong.");
+        router.navigate("/");
+      })
       .finally(() => setLoading(false));
   }, []);
 

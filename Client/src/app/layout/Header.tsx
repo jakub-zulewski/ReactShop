@@ -16,6 +16,7 @@ const midLinks = [
   { title: "catalog", path: "/catalog" },
   { title: "about", path: "/about" },
   { title: "contact", path: "/contact" },
+  { title: "errors", path: "/errors" },
 ];
 const rightLinks = [
   { title: "login", path: "/login" },
