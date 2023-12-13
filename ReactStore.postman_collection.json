@@ -48,6 +48,185 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Buggy",
+			"item": [
+				{
+					"name": "Not found",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/buggy/not-found",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"buggy",
+								"not-found"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bad request",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/buggy/bad-request",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"buggy",
+								"bad-request"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unauthorized",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/buggy/unauthorized",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"buggy",
+								"unauthorized"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validation error",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/buggy/validation-error",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"buggy",
+								"validation-error"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Server error",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/buggy/server-error",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"buggy",
+								"server-error"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Baskets",
+			"item": [
+				{
+					"name": "Get Basket",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/baskets",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"baskets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Item to Basket",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/baskets?productId=1&quantity=1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"baskets"
+							],
+							"query": [
+								{
+									"key": "productId",
+									"value": "1"
+								},
+								{
+									"key": "quantity",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Item from Basket",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/baskets?productId=1&quantity=1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"baskets"
+							],
+							"query": [
+								{
+									"key": "productId",
+									"value": "1"
+								},
+								{
+									"key": "quantity",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
