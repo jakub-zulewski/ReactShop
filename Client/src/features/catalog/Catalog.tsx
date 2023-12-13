@@ -4,6 +4,7 @@ import ProductList from "./ProductList";
 import agent from "../../app/api/agent";
 import { router } from "../../app/router/Routes";
 import { toast } from "react-toastify";
+import LoadingComponent from "../../app/layout/LoadingComponent";
 
 export default function Catalog() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -19,7 +20,7 @@ export default function Catalog() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <h3>Loading...</h3>;
+  if (loading) return <LoadingComponent message="Loading products..." />;
 
   return <ProductList products={products} />;
 }
