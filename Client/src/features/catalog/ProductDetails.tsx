@@ -16,6 +16,7 @@ import NotFound from "../errors/NotFound";
 import { router } from "../../app/router/Routes";
 import { toast } from "react-toastify";
 import LoadingComponent from "../../app/layout/LoadingComponent";
+import { currencyFormat } from "../../app/util/util";
 
 export default function ProductDetails() {
   const { id } = useParams<{ id: string }>();
@@ -50,7 +51,7 @@ export default function ProductDetails() {
         <Typography variant="h3">{product.name}</Typography>
         <Divider sx={{ mb: 2 }} />
         <Typography variant="h4" color="secondary">
-          ${(product.price / 100).toFixed(2)}
+          {currencyFormat(product.price)}
         </Typography>
         <TableContainer>
           <Table>

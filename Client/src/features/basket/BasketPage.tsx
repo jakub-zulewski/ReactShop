@@ -15,6 +15,8 @@ import { useState } from "react";
 import agent from "../../app/api/agent";
 import { LoadingButton } from "@mui/lab";
 import { toast } from "react-toastify";
+import { currencyFormat } from "../../app/util/util";
+import { Link } from "react-router-dom";
 
 export default function BasketPage() {
   const { basket, setBasket, removeItem } = useStoreContext();
@@ -69,12 +71,17 @@ export default function BasketPage() {
                     alt={item.name}
                     style={{ height: 50, marginRight: 20 }}
                   />
-                  <span>{item.name}</span>
+                  <Typography
+                    component={Link}
+                    variant="body2"
+                    sx={{ textDecoration: "none" }}
+                    to={`/catalog/${item.productId}`}
+                  >
+                    {item.name}
+                  </Typography>
                 </Box>
               </TableCell>
-              <TableCell align="right">
-                ${(item.price / 100).toFixed(2)}
-              </TableCell>
+              <TableCell align="right">{currencyFormat(item.price)}</TableCell>
               <TableCell align="center">
                 <LoadingButton
                   loading={
@@ -105,7 +112,7 @@ export default function BasketPage() {
                 </LoadingButton>
               </TableCell>
               <TableCell align="right">
-                ${((item.price * item.quantity) / 100).toFixed(2)}
+                {currencyFormat(item.price * item.quantity)}
               </TableCell>
               <TableCell align="right">
                 <LoadingButton
