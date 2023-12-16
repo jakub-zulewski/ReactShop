@@ -16,10 +16,10 @@ export function StoreProvider({ children }: PropsWithChildren<unknown>) {
 
       if (items[itemIndex].quantity === 0) {
         items.splice(itemIndex, 1);
-        setBasket((prevState) => {
-          return { ...prevState!, items };
-        });
       }
+      setBasket((prevState) => {
+        return { ...prevState!, items };
+      });
     }
   }
 
