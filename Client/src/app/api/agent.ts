@@ -38,7 +38,7 @@ axios.interceptors.response.use(
         break;
     }
     return Promise.reject(error.response);
-  }
+  },
 );
 
 const requests = {

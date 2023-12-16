@@ -46,8 +46,7 @@ export default function BasketPage() {
       .finally(() => setStatus({ loading: false, name: "" }));
   }
 
-  if (!basket)
-    return <Typography variant="h3">Your basket is empty.</Typography>;
+  if (!basket) return <Typography variant="h3">Your basket is empty.</Typography>;
 
   return (
     <>
@@ -85,54 +84,30 @@ export default function BasketPage() {
                     </Typography>
                   </Box>
                 </TableCell>
-                <TableCell align="right">
-                  {currencyFormat(item.price)}
-                </TableCell>
+                <TableCell align="right">{currencyFormat(item.price)}</TableCell>
                 <TableCell align="center">
                   <LoadingButton
-                    loading={
-                      status.loading &&
-                      status.name === "remove" + item.productId
-                    }
-                    onClick={() =>
-                      handleRemoveItem(
-                        item.productId,
-                        1,
-                        "remove" + item.productId
-                      )
-                    }
+                    loading={status.loading && status.name === "remove" + item.productId}
+                    onClick={() => handleRemoveItem(item.productId, 1, "remove" + item.productId)}
                     color="error"
                   >
                     <Remove />
                   </LoadingButton>
                   {item.quantity}
                   <LoadingButton
-                    loading={
-                      status.loading && status.name === "add" + item.productId
-                    }
-                    onClick={() =>
-                      handleAddItem(item.productId, "add" + item.productId)
-                    }
+                    loading={status.loading && status.name === "add" + item.productId}
+                    onClick={() => handleAddItem(item.productId, "add" + item.productId)}
                     color="secondary"
                   >
                     <Add />
                   </LoadingButton>
                 </TableCell>
-                <TableCell align="right">
-                  {currencyFormat(item.price * item.quantity)}
-                </TableCell>
+                <TableCell align="right">{currencyFormat(item.price * item.quantity)}</TableCell>
                 <TableCell align="right">
                   <LoadingButton
-                    loading={
-                      status.loading &&
-                      status.name === "delete" + item.productId
-                    }
+                    loading={status.loading && status.name === "delete" + item.productId}
                     onClick={() =>
-                      handleRemoveItem(
-                        item.productId,
-                        item.quantity,
-                        "delete" + item.productId
-                      )
+                      handleRemoveItem(item.productId, item.quantity, "delete" + item.productId)
                     }
                     color="error"
                   >
@@ -148,13 +123,7 @@ export default function BasketPage() {
         <Grid item xs={6} />
         <Grid item xs={6}>
           <BasketSummary />
-          <Button
-            component={Link}
-            to="/checkout"
-            variant="contained"
-            size="large"
-            fullWidth
-          >
+          <Button component={Link} to="/checkout" variant="contained" size="large" fullWidth>
             Checkout
           </Button>
         </Grid>

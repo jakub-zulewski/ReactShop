@@ -37,9 +37,7 @@ export default function ProductCard({ product }: Props) {
     <Card>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: "secondary.main" }}>
-            {product.name.charAt(0).toUpperCase()}
-          </Avatar>
+          <Avatar sx={{ bgcolor: "secondary.main" }}>{product.name.charAt(0).toUpperCase()}</Avatar>
         }
         title={product.name}
         titleTypographyProps={{
@@ -64,11 +62,7 @@ export default function ProductCard({ product }: Props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <LoadingButton
-          loading={loading}
-          onClick={() => handleAddItem(product.id)}
-          size="small"
-        >
+        <LoadingButton loading={loading} onClick={() => handleAddItem(product.id)} size="small">
           Add to cart
         </LoadingButton>
         <Button component={Link} to={`/catalog/${product.id}`} size="small">
