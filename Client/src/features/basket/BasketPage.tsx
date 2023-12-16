@@ -12,7 +12,6 @@ import {
   Typography,
 } from "@mui/material";
 import { Add, Delete, Remove } from "@mui/icons-material";
-import { useStoreContext } from "../../app/context/storeContextState";
 import { useState } from "react";
 import agent from "../../app/api/agent";
 import { LoadingButton } from "@mui/lab";
@@ -20,9 +19,12 @@ import { toast } from "react-toastify";
 import { currencyFormat } from "../../app/util/util";
 import { Link } from "react-router-dom";
 import BasketSummary from "./BasketSummary";
+import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
+import { removeItem, setBasket } from "./basketSlice";
 
 export default function BasketPage() {
-  const { basket, setBasket, removeItem } = useStoreContext();
+  const { basket } = useAppSelector((state) => state.basket);
+  const dispatch = useAppDispatch();
   const [status, setStatus] = useState({
     loading: false,
     name: "",
@@ -32,7 +34,7 @@ export default function BasketPage() {
     setStatus({ loading: true, name });
 
     agent.Basket.addItem(productId)
-      .then((basket) => setBasket(basket))
+      .then((basket) => dispatch(setBasket(basket)))
       .catch(() => toast.error("Something went wrong."))
       .finally(() => setStatus({ loading: false, name: "" }));
   }
@@ -41,7 +43,7 @@ export default function BasketPage() {
     setStatus({ loading: true, name });
 
     agent.Basket.removeItem(productId, quantity)
-      .then(() => removeItem(productId, quantity))
+      .then(() => dispatch(removeItem({ productId, quantity })))
       .catch(() => toast.error("Something went wrong."))
       .finally(() => setStatus({ loading: false, name: "" }));
   }
