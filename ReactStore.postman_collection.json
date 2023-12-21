@@ -35,13 +35,23 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/products",
+							"raw": "{{url}}/api/products?orderBy=price&searchTerm=Red",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"products"
+							],
+							"query": [
+								{
+									"key": "orderBy",
+									"value": "price"
+								},
+								{
+									"key": "searchTerm",
+									"value": "Red"
+								}
 							]
 						}
 					},

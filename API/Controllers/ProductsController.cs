@@ -12,11 +12,12 @@ public class ProductsController(StoreContext storeContext) : BaseApiController
     private readonly StoreContext _storeContext = storeContext;
 
     [HttpGet]
-    public async Task<ActionResult<List<Product>>> GetProducts(string orderBy)
+    public async Task<ActionResult<List<Product>>> GetProducts(string orderBy, string searchTerm)
     {
         var query = _storeContext.Products
             .AsNoTracking()
             .Sort(orderBy)
+            .Search(searchTerm)
             .AsQueryable();
 
         return await query.ToListAsync();
