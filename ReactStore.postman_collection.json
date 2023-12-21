@@ -35,7 +35,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/products?orderBy=price&searchTerm=Red",
+							"raw": "{{url}}/api/products?orderBy=price&searchTerm=blue&brands=NetCore&types=Hats",
 							"host": [
 								"{{url}}"
 							],
@@ -50,7 +50,15 @@
 								},
 								{
 									"key": "searchTerm",
-									"value": "Red"
+									"value": "blue"
+								},
+								{
+									"key": "brands",
+									"value": "NetCore"
+								},
+								{
+									"key": "types",
+									"value": "Hats"
 								}
 							]
 						}
