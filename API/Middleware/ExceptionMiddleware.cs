@@ -1,5 +1,7 @@
 ﻿using System.Text.Json;
 
+using API.Configs;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Middleware;
@@ -10,10 +12,6 @@ public class ExceptionMiddleware(
     private readonly RequestDelegate _next = next;
     private readonly ILogger<ExceptionMiddleware> _logger = logger;
     private readonly IHostEnvironment _env = env;
-    private readonly JsonSerializerOptions _jsonSerializerOptions = new()
-    {
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-    };
 
     public async Task InvokeAsync(HttpContext httpContext)
     {
@@ -35,7 +33,8 @@ public class ExceptionMiddleware(
                 Title = exception.Message
             };
 
-            var jsonResponse = JsonSerializer.Serialize(response, _jsonSerializerOptions);
+            var jsonResponse = JsonSerializer.Serialize(
+                response, JsonConfig.JsonSerializerOptionsCamelCase);
 
             await httpContext.Response.WriteAsync(jsonResponse);
         }

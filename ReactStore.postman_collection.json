@@ -35,7 +35,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/products?orderBy=price&searchTerm=blue&brands=NetCore&types=Hats",
+							"raw": "{{url}}/api/products?orderBy=price&searchTerm=red&brands=NetCore&types=Boots&pageNumber=1&pageSize=10",
 							"host": [
 								"{{url}}"
 							],
@@ -50,7 +50,7 @@
 								},
 								{
 									"key": "searchTerm",
-									"value": "blue"
+									"value": "red"
 								},
 								{
 									"key": "brands",
@@ -58,7 +58,15 @@
 								},
 								{
 									"key": "types",
-									"value": "Hats"
+									"value": "Boots"
+								},
+								{
+									"key": "pageNumber",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
 								}
 							]
 						}

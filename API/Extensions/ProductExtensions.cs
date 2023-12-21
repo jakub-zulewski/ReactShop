@@ -20,14 +20,9 @@ public static class ProductExtensions
     }
 
     public static IQueryable<Product> Search(this IQueryable<Product> query, string searchTerm)
-    {
-        if (string.IsNullOrEmpty(searchTerm))
-            return query;
-
-        var lowerCaseSearchTerm = searchTerm.Trim().ToLower();
-
-        return query.Where(x => x.Name.ToLower().Contains(lowerCaseSearchTerm));
-    }
+        => string.IsNullOrEmpty(searchTerm)
+            ? query
+            : query.Where(x => x.Name.ToLower().Contains(searchTerm.Trim().ToLower()));
 
     public static IQueryable<Product> Filter(
         this IQueryable<Product> query, string brands, string types)
