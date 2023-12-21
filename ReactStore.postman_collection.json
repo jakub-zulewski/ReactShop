@@ -72,6 +72,25 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get filters",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/products/filters",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"filters"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
