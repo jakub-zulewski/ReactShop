@@ -272,6 +272,96 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Accounts",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"zaq1@WSX\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/accounts/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"zaq1@WSX\",\r\n    \"email\": \"admin@test.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/accounts/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkB0ZXN0LmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJhZG1pbiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6WyJBZG1pbiIsIk1lbWJlciJdLCJleHAiOjE3MDQyMjc4ODl9.clG0CFcMz4QJ3nMmK09t6rG-QTC-eRxu8sxLxvrKm_nWY0d5gfUFeGZQ_7LwlYOnd_Yr-XA47hQXVpgHb6faIg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/accounts/currentUser",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"accounts",
+								"currentUser"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
