@@ -1,6 +1,8 @@
-﻿using API.Data;
+﻿using API.Configs;
+using API.Data;
 using API.DTOs;
 using API.Entities;
+using API.Extensions;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,20 +12,21 @@ namespace API.Controllers;
 public class BasketsController(StoreContext storeContext) : BaseApiController
 {
     private readonly StoreContext _storeContext = storeContext;
-    private readonly string _cookieName = "buyerId";
 
     [HttpGet]
     public async Task<ActionResult<BasketDTO>> GetBasket()
     {
-        var basket = await RetrieveBasket();
+        var basket = await RetrieveBasket(GetBuyerId());
 
-        return basket is null ? NotFound() : global::API.Controllers.BasketsController.MapBasketToDTO(basket);
+        return basket is null
+            ? NotFound()
+            : basket.MapBasketToDTO();
     }
 
     [HttpPost]
     public async Task<ActionResult<BasketDTO>> AddItemToBasket(int productId, int quantity)
     {
-        var basket = await RetrieveBasket() ?? await CreateBasket();
+        var basket = await RetrieveBasket(GetBuyerId()) ?? await CreateBasket();
         var product = await _storeContext.Products.FindAsync(productId);
 
         if (product is null)
@@ -34,14 +37,14 @@ public class BasketsController(StoreContext storeContext) : BaseApiController
         var result = await _storeContext.SaveChangesAsync() > 0;
 
         return result
-            ? CreatedAtAction(nameof(GetBasket), global::API.Controllers.BasketsController.MapBasketToDTO(basket))
+            ? CreatedAtAction(nameof(GetBasket), basket.MapBasketToDTO())
             : BadRequest(new ProblemDetails { Title = "Problem saving item to basket." });
     }
 
     [HttpDelete]
     public async Task<ActionResult> RemoveBasketItem(int productId, int quantity)
     {
-        var basket = await RetrieveBasket();
+        var basket = await RetrieveBasket(GetBuyerId());
 
         if (basket is null)
             return NotFound();
@@ -55,22 +58,37 @@ public class BasketsController(StoreContext storeContext) : BaseApiController
             : BadRequest(new ProblemDetails { Title = "Problem removing item from the basket." });
     }
 
-    private async Task<Basket> RetrieveBasket()
-        => await _storeContext.Baskets
+    private async Task<Basket> RetrieveBasket(string buyerId)
+    {
+        if (string.IsNullOrEmpty(buyerId))
+        {
+            Response.Cookies.Delete(CookieConstants.BASKET_COOKIE_NAME);
+
+            return null;
+        }
+
+        return await _storeContext.Baskets
             .Include(x => x.Items)
             .ThenInclude(x => x.Product)
-            .FirstOrDefaultAsync(x => x.BuyerId == Request.Cookies[_cookieName]);
+            .FirstOrDefaultAsync(x => x.BuyerId == buyerId);
+    }
 
     private async Task<Basket> CreateBasket()
     {
-        var buyerId = Guid.NewGuid().ToString();
-        var cookieOptions = new CookieOptions
-        {
-            IsEssential = true,
-            Expires = DateTime.Now.AddDays(30)
-        };
+        var buyerId = User.Identity?.Name;
 
-        Response.Cookies.Append(_cookieName, buyerId, cookieOptions);
+        if (string.IsNullOrEmpty(buyerId))
+        {
+            buyerId = Guid.NewGuid().ToString();
+
+            var cookieOptions = new CookieOptions
+            {
+                IsEssential = true,
+                Expires = DateTime.Now.AddDays(30)
+            };
+
+            Response.Cookies.Append(CookieConstants.BASKET_COOKIE_NAME, buyerId, cookieOptions);
+        }
 
         var basket = new Basket { BuyerId = buyerId };
 
@@ -79,22 +97,6 @@ public class BasketsController(StoreContext storeContext) : BaseApiController
         return basket;
     }
 
-    private static BasketDTO MapBasketToDTO(Basket basket)
-    {
-        return new BasketDTO
-        {
-            Id = basket.Id,
-            BuyerId = basket.BuyerId,
-            Items = basket.Items.Select(item => new BasketItemDTO
-            {
-                ProductId = item.ProductId,
-                Name = item.Product.Name,
-                Price = item.Product.Price,
-                Brand = item.Product.Brand,
-                Type = item.Product.Type,
-                PictureUrl = item.Product.PictureUrl,
-                Quantity = item.Quantity
-            }).ToList()
-        };
-    }
+    private string GetBuyerId()
+        => User.Identity?.Name ?? Request.Cookies[CookieConstants.BASKET_COOKIE_NAME];
 }
