@@ -8,24 +8,29 @@ namespace API.Data;
 // cSpell:disable
 public static class DbInitializer
 {
-    private static readonly string[] Roles = ["Member", "Admin"];
+    private static readonly List<Role> Roles =
+    [
+        new Role
+        {
+            Id = 1,
+            Name = "Member",
+            NormalizedName = "MEMBER"
+        },
+        new Role
+        {
+            Id = 2,
+            Name = "Admin",
+            NormalizedName = "ADMIN"
+        },
+    ];
 
     public static async Task Initialize(StoreContext storeContext, UserManager<User> userManager,
-        RoleManager<IdentityRole> roleManager)
+        RoleManager<Role> roleManager)
     {
         if (!await roleManager.Roles.AnyAsync() && !await userManager.Users.AnyAsync())
         {
-            await roleManager.CreateAsync(new IdentityRole
-            {
-                Name = Roles[0],
-                NormalizedName = Roles[0].ToUpper()
-            });
-
-            await roleManager.CreateAsync(new IdentityRole
-            {
-                Name = Roles[1],
-                NormalizedName = Roles[1].ToUpper()
-            });
+            foreach (var role in Roles)
+                await roleManager.CreateAsync(role);
 
             var user = new User
             {
@@ -35,7 +40,7 @@ public static class DbInitializer
 
             await userManager.CreateAsync(user, "zaq1@WSX");
 
-            await userManager.AddToRoleAsync(user, Roles[0]);
+            await userManager.AddToRoleAsync(user, Roles[0].Name);
 
             var admin = new User
             {
@@ -45,7 +50,7 @@ public static class DbInitializer
 
             await userManager.CreateAsync(admin, "zaq1@WSX");
 
-            await userManager.AddToRolesAsync(admin, Roles);
+            await userManager.AddToRolesAsync(admin, Roles.Select(x => x.Name));
         }
 
         if (!await storeContext.Products.AnyAsync())

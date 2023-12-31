@@ -19,7 +19,7 @@ builder.Services.AddDbContext<StoreContext>(options
     => options.UseSqlite(builder.Configuration.GetConnectionString("SQLite")));
 
 builder.Services.AddIdentityCore<User>(options => options.User.RequireUniqueEmail = true)
-    .AddRoles<IdentityRole>()
+    .AddRoles<Role>()
     .AddEntityFrameworkStores<StoreContext>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -108,7 +108,7 @@ app.MapControllers();
 var scope = app.Services.CreateScope();
 var storeContext = scope.ServiceProvider.GetRequiredService<StoreContext>();
 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
-var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
 var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
 try
